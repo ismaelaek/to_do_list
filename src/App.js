@@ -1,5 +1,4 @@
-// import { AddToDo } from './Comps';
-// import {Toaster} from 'react-hot-toast'
+
 import React, { useState } from 'react';
 import Entity from './Entity';
 import './App.css';
