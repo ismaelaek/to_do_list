@@ -56,7 +56,7 @@ button{
 }
 
 .tasksList{
-  width: 60%;
+  width:auto;
   margin: 0 auto;
   border:black solid 1px;
 }
@@ -69,7 +69,54 @@ button{
 
 .task{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 30px repeat(4, minmax(150px, 1fr));
   gap: 20px;
   align-self: center;
+}
+.action {
+  display:grid;
+  grid-template-columns: repeat(2,auto);
+  gap:10px;
+}
+.action > button{
+  flex-grow: 1;
+  background:transparent;
+  cursor:pointer;
+}
+.action>button:first-child {
+  color:#007bff ;
+}
+.action>button:last-child {
+  color:red ;
+}
+.doneText {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  line-height:20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+  margin:5px 10px 0 ;
+}
+
+input[type=checkbox]:checked {
+  border-color: #007bff;
+  background-color: #007bff;
+}
+
+input[type=checkbox]:checked::after {
+  content: '\2713';
+  font-size: 14px;
+  color: #fff;
+  position: absolute;
+  top: 2px;
+  left: 5px;
 }

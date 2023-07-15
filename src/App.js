@@ -10,6 +10,7 @@ function App() {
   const [taskHour, setTaskHour] = useState('');
   const [taskMinute, setTaskMinute] = useState('');
   const [taskPriority, setTaskPriority] = useState('low');
+  const [taskDone, setTaskDone] = useState(false);
 
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
@@ -33,21 +34,41 @@ function App() {
     setTaskPriority(event.target.value);
   };
 
+
   const AddToDo = () => {
-    if (taskName.trim() !== '' && taskHour !== '' && taskMinute !== '') {
-      const time = `${taskHour.padStart(2, '0')}:${taskMinute.padStart(2, '0')}`;
-      const newTask = {
-        name: taskName,
-        time: time,
-        priority: taskPriority
-      };
-      setTasks([...tasks, newTask]);
-      setTaskName('');
-      setTaskHour('');
-      setTaskMinute('');
-      setTaskPriority('low');
-    }
-  };
+  if (taskName.trim() !== '' && taskHour !== '' && taskMinute !== '') {
+    const time = `${taskHour.padStart(2, '0')}:${taskMinute.padStart(2, '0')}`;
+    const newTask = {
+      name: taskName,
+      time: time,
+      priority: taskPriority,
+      done: taskDone
+    };
+    const sortedTasks = [...tasks, newTask].sort((a, b) => {
+      // Convert the time strings to Date objects for comparison to sort the tasks array based on the task time
+      const timeA = new Date(`2023-01-01T${a.time}`);
+      const timeB = new Date(`2023-01-01T${b.time}`);
+      return timeA - timeB; 
+    });
+
+    setTasks(sortedTasks);
+    setTaskName('');
+    setTaskHour('');
+    setTaskMinute('');
+    setTaskPriority('low');
+    setTaskDone(false);
+  }
+};
+  const DeleteToDo = (inx) => {
+    let NewArr = [...tasks];
+    NewArr.splice(inx, 1);
+    setTasks(NewArr);
+  }
+  const handleDoneBtn = (index)=> {
+    const updatedStutus = [...tasks];
+    updatedStutus[index].done = !updatedStutus[index].done;
+    setTasks(updatedStutus);
+  }
   
   return (
     <div className="App">
@@ -76,7 +97,6 @@ function App() {
             placeholder="MM"
 
           />
-
         <select value={taskPriority} onChange={handlePriorityChange}>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
@@ -87,20 +107,28 @@ function App() {
       <div className="tasksList">
         
         <Entity params = {tasks} />
-          {tasks.map((task) => (
-            <div className="task">
-              <div className="taskName">
+          {tasks.map((task, index) => (
+            <div className={`task ${task.done ? 'done' : ''}`} key={index}>
+              <div >
+                <input
+                  type="checkbox"
+                  checked={task.done}
+                  onChange={() => handleDoneBtn(index)}
+                />
+              </div>
+              <div className={task.done ? 'doneText' : ''}>
                 {task.name}
               </div>
-              <div className="taskTime">
+              <div className={task.done ? 'doneText' : ''}>
                 {task.time}
               </div>
-              <div className="taskPriority">
+              <div className={task.done ? 'doneText' : ''}>
                 {task.priority}
               </div>
-            {/* <li>
-              Task: {task.name} | Time: {task.time} | Priority: {task.priority}
-            </li> */}
+              <div className="action">
+                <button onClick={() => handleDoneBtn(index)}>Done</button>
+                <button onClick={() => DeleteToDo(index)}>Delete</button>
+              </div>
             </div>
           ))}
       </div>
