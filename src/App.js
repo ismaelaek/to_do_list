@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Entity from './Entity';
+import EditTask from './EditTask';
 import './App.css';
 
 function App() {
@@ -10,6 +11,9 @@ function App() {
   const [taskMinute, setTaskMinute] = useState('');
   const [taskPriority, setTaskPriority] = useState('low');
   const [taskDone, setTaskDone] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
 
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
@@ -31,6 +35,24 @@ function App() {
 
   const handlePriorityChange = (event) => {
     setTaskPriority(event.target.value);
+  };
+
+  const handleEdit = (index) => {
+    setEditingTask(tasks[index]);
+    setIsDrawerOpen(true);
+  };
+  const handleSaveEdit = (editedTask) => {
+    const updatedTasks = [...tasks];
+    const editingTaskIndex = tasks.findIndex((task) => task === editingTask);
+    updatedTasks[editingTaskIndex] = editedTask;
+    setTasks(updatedTasks);
+    setIsDrawerOpen(false);
+    setEditingTask(null);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+    setEditingTask(null);
   };
 
 
@@ -125,12 +147,23 @@ function App() {
                 {task.priority}
               </div>
               <div className="action">
+                <button onClick={() => handleEdit(index)}>Edit</button>
                 <button onClick={() => handleDoneBtn(index)}>Done</button>
                 <button onClick={() => DeleteToDo(index)}>Delete</button>
               </div>
             </div>
           ))}
       </div>
+      {isDrawerOpen && (
+        <div className="drawer">
+          <EditTask
+            task={editingTask}
+            onSave={handleSaveEdit}
+            onClose={handleCloseDrawer}
+            isOpen={isDrawerOpen}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,97 @@
+.edit-task {
+    background-color: #ffffff;
+    border: 1px solid #333333;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.edit-task h2 {
+    margin-bottom: 10px;
+}
+
+.edit-task input,
+.edit-task select {
+    height: 30px;
+    line-height: 30px;
+    background-color: #f9f9f9;
+    color: #333333;
+    padding: 0 5px;
+    outline: none;
+    border: #333333 solid 1px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.edit-task label {
+    margin-left: 5px;
+}
+
+.edit-task-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-task-buttons button {
+    background-color: #4caf50;
+    color: #f9f9f9;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.edit-task-buttons button:last-child {
+    background-color: #d9534f;
+}
+
+.edit-task input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+    margin: 5px 10px 0;
+}
+
+.edit-task input[type="checkbox"]:checked {
+    border-color: #007bff;
+    background-color: #007bff;
+}
+
+.edit-task input[type="checkbox"]:checked::after {
+    content: "\2713";
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+}
+.edit-task {
+    background-color: #ffffff;
+    border: 1px solid #333333;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    position: fixed;
+    left: -300px;
+    /* Initially hide the drawer */
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+    transition: left 0.3s ease-in-out;
+}
+
+.edit-task.show {
+    left: 0;
+}
